@@ -2,4 +2,4 @@
 # script that displays To infinity and beyond indefinitely.
 # shellcheck disable=SC2009
 
- kill -SIGKILL "$(pgrep --full 7-highlander)"
+ pkill -SIGKILL -f "7-highlander"
