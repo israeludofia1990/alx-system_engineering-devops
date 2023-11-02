@@ -2,5 +2,8 @@
 # This script is displaying "Best School" 10 times
 
 count=0
-while [ count -l 10 ]
-
+while [ $count -le 10 ]
+do
+    echo "Best School"
+    ((count++))
+done
