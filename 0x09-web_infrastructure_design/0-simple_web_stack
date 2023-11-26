@@ -1,0 +1,77 @@
+Designing a One-Server Web Infrastructure for www.foobar.com
+User Accessing www.foobar.com
+User Request:
+
+1. A user wants to access www.foobar.com.
+Domain Name:
+
+2. The user's computer asks the internet, "Where is www.foobar.com?".
+DNS Resolution:
+
+3. The Domain Name System (DNS) translates www.foobar.com to the server's IP address (8.8.8.8).
+Server Request:
+
+4. The user's computer sends a request to the server at IP address 8.8.8.8.
+Infrastructure Components
+
+
+Components:
+Server:
+Physical or virtual machine handling requests and serving content.
+
+Web Server (Nginx):
+Handles incoming requests and serves static content.
+
+Application Server:
+Runs the application code, processes dynamic content, and communicates with the database.
+
+Application Files (Code Base):
+The code that runs the website's functionality.
+
+Database (MySQL):
+Stores and retrieves data for the application.
+
+
+Roles:
+What is a Server:
+A computer that stores and manages data, serves requests, and hosts applications.
+
+Role of Domain Name:
+Acts as a human-readable address for the server's IP, making it easier for users to access websites.
+
+DNS Record for www:
+The "www" in www.foobar.com is a subdomain, and it's typically an alias (CNAME) record pointing to the main domain.
+
+Role of Web Server (Nginx):
+Manages incoming requests, serves static content, and acts as a reverse proxy to the application server.
+
+Role of Application Server:
+Executes the dynamic code, processes requests, and communicates with the database.
+
+Role of the Database:
+Stores and retrieves data for the application.
+
+Communication with User's Computer:
+Communication with the user's computer is facilitated through the Hypertext Transfer Protocol (HTTP) or its secure version (HTTPS).
+
+
+Issues with the Infrastructure:
+Single Point of Failure (SPOF):
+The entire website depends on a single server. If it fails, the site goes down.
+
+Downtime During Maintenance:
+When deploying new code or performing maintenance, the web server needs to be restarted, causing downtime.
+
+Scaling Limitations:
+The infrastructure may struggle to handle high traffic. Scaling options are limited with a single server setup.
+
+
+Steps to Address Issues:
+Mitigate SPOF:
+Introduce redundancy, consider load balancing, or explore cloud solutions for increased reliability.
+
+Reduce Downtime During Maintenance:
+Implement strategies like rolling deployments or use a second server for redundancy to avoid complete downtime during updates.
+
+Scale for Traffic:
+Consider distributing the workload by adding more servers, utilizing content delivery networks (CDNs), or adopting cloud-based solutions that allow easy scalability.
