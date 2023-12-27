@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
-
 # Server details
 ssh -i ~/.ssh/school ubuntu@107.23.95.248
