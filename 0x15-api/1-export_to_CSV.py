@@ -6,23 +6,21 @@ import sys
 
 
 if __name__ == "__main__":
-    url = "https://jsonplaceholder.typicode.com/"
+    base_url = "https://jsonplaceholder.typicode.com/users"
     user_id = sys.argv[1]
+    url = base_url + "/" + user_id
 
-    user_response = requests.get(url + "users/{}".format(user_id))
+    user_response = requests.get(url)
     '''convert response to python dict'''
     user = user_response.json()
     username = user.get("username")
-    todos_response = requests.get(url + "todos", params={"userid": user_id})
-    todos = todos_response.json()
+    todos_url = url + "/todos"
+    response = requests.get(todos_url)
+    todos = response.json()
 
     '''open csv file for writing'''
-    with open("{}.csv".format(user_id), "w", newline="") as csv_file:
-        writer = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
+    with open("{}.csv".format(user_id), "w") as csv_file:
         for todo in todos:
-            writer.writerow([
-                user_id,
-                username,
-                todo.get("completed"),
-                todo.get("title")
-                ])
+            csv_file.write('"{}","{}","{}","{}"\n'
+                          .format(user_id, username, todo.get('completed'),
+                               todo.get('title')))

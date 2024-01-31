@@ -9,17 +9,22 @@ import sys
 
 
 if __name__ == "__main__":
-    url = "https://jsonplaceholder.typicode.com/"
+    base_url = "https://jsonplaceholder.typicode.com/user"
     user_id = sys.argv[1]
-    user = requests.get(url + "users/{}".format(user_id)).json()
-    todos = requests.get(url + "todos", params={"user": user_id}).json()
+    url = base_url + "/" + user_id
+    url_response = requests.get(url)
+    username = url_response.json().get('username')
+
+    todos_url = url + "/todos"
+    todos_responce = requests.get(todos_url)
+    todos = todos_responce.json()
     data_to_export = {user_id: []}
     for todo in todos:
         task_info = {
                 "task": todo.get("title"),
                 "completed": todo.get("completed"),
-                "username": user.get("username")
+                "username": username
                 }
         data_to_export[user_id].append(task_info)
-        with open("{}.json".format(user_id), "w") as jsonfile:
-            json.dump(data_to_export, jsonfile, indent=4)
+    with open("{}.json".format(user_id), "w") as jsonfile:
+        json.dump(data_to_export, jsonfile)

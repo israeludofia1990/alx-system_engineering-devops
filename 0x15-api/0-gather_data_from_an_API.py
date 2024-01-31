@@ -4,20 +4,24 @@ import requests
 import sys
 
 if __name__ == "__main__":
-    base_url = "https://jsonplaceholder.typicode.com/"
-    employee_id = sys.argv[1]
-    api_responce = requests.get(base_url + "users/{}".format(employee_id))
+    userId = sys.argv[1]
+    user = requests.get("https://jsonplaceholder.typicode.com/users/{}"
+                        .format(userId))
 
-    user_json = api_responce.json()
-    req_param = {"userid": employee_id}
-    get_todos = requests.get(base_url + "todos", params=req_param)
-    todos_json = get_todos.json()
-    completed = []
-    for todo in todos_json:
-        if todo.get("completed") is True:
-            completed.append(todo.get("title"))
-    print("Employee {} is done with tasks({}/{})"
-          .format(user_json.get("name"), len(completed), len(todos_json)))
+    name = user.json().get('name')
 
-    for complete in completed:
-        print("\t {}".format(complete))
+    todos = requests.get('https://jsonplaceholder.typicode.com/todos')
+    totalTasks = 0
+    completed = 0
+
+    for task in todos.json():
+        if task.get('userId') == int(userId):
+            totalTasks += 1
+            if task.get('completed'):
+                completed += 1
+
+    print('Employee {} is done with tasks({}/{}):'
+          .format(name, completed, totalTasks))
+
+    print('\n'.join(["\t " + task.get('title') for task in todos.json()
+          if task.get('userId') == int(userId) and task.get('completed')]))
